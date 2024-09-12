@@ -9,7 +9,7 @@ public class SteveScript : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float castLine;
     [SerializeField] bool onGround;
-
+    [SerializeField] Animator animator;
 
     private void Start()
     {
@@ -21,6 +21,8 @@ public class SteveScript : MonoBehaviour
     {
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         onGround = Physics.Raycast(transform.position, Vector3.down, castLine);
+        animator.SetFloat("WalkFloat" , input.normalized.magnitude);
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -28,7 +30,7 @@ public class SteveScript : MonoBehaviour
             {
                 onGround = false;
                 rb.AddForce(Vector3.up * speed, ForceMode.Impulse);
-
+                animator.SetTrigger("Trigger");
             }
         }
     }
